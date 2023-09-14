@@ -10,7 +10,7 @@ abstract class AppTheme {
         scaffoldBackgroundColor: AppColors.colorBackground,
         appBarTheme: AppBarTheme(
           centerTitle: true,
-          toolbarHeight: 180,
+        
           backgroundColor: AppColors.colorBackground,
           titleTextStyle: TextStyle(
               fontFamily: GoogleFonts.roboto().fontFamily,
