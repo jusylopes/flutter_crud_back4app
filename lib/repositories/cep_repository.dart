@@ -11,7 +11,7 @@ class CepRepository {
       Response response = await dio.get('https://viacep.com.br/ws/$cep/json');
       final data = response.data;
 
-      return CepModel.fromJson(data);
+      return CepModel.fromMap(data);
     } on DioException catch (e) {
       if (e.response != null) {
         throw Exception('${e.response?.statusCode}');
