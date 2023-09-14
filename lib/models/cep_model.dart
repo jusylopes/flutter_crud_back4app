@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class CepModel {
   final String cep;
   final String logradouro;
@@ -47,4 +49,41 @@ class CepModel {
       siafi: siafi ?? this.siafi,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'cep': cep});
+    result.addAll({'logradouro': logradouro});
+    result.addAll({'complemento': complemento});
+    result.addAll({'bairro': bairro});
+    result.addAll({'localidade': localidade});
+    result.addAll({'uf': uf});
+    result.addAll({'ibge': ibge});
+    result.addAll({'gia': gia});
+    result.addAll({'ddd': ddd});
+    result.addAll({'siafi': siafi});
+
+    return result;
+  }
+
+  factory CepModel.fromMap(Map<String, dynamic> map) {
+    return CepModel(
+      cep: map['cep'] ?? '',
+      logradouro: map['logradouro'] ?? '',
+      complemento: map['complemento'] ?? '',
+      bairro: map['bairro'] ?? '',
+      localidade: map['localidade'] ?? '',
+      uf: map['uf'] ?? '',
+      ibge: map['ibge'] ?? '',
+      gia: map['gia'] ?? '',
+      ddd: map['ddd'] ?? '',
+      siafi: map['siafi'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory CepModel.fromJson(String source) =>
+      CepModel.fromMap(json.decode(source));
 }
