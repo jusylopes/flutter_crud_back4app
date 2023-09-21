@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud_back4app/utils/assets_manager.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 abstract class AppTheme {
   static ThemeData get light => ThemeData(
         primarySwatch: AppColors.colorPrimarySwatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: GoogleFonts.roboto().fontFamily,
+        fontFamily: AssetsManager.fontFamily,
         scaffoldBackgroundColor: AppColors.colorBackground,
         appBarTheme: AppBarTheme(
           centerTitle: true,
-        
           backgroundColor: AppColors.colorBackground,
           titleTextStyle: TextStyle(
-              fontFamily: GoogleFonts.roboto().fontFamily,
+              fontFamily: AssetsManager.fontFamily,
               fontSize: 33.0,
               color: AppColors.primaryColor,
               fontWeight: FontWeight.bold),
