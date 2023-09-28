@@ -22,14 +22,23 @@ class CepBloc extends Bloc<CepEvent, CepState> {
     emit(state.copyWith(status: BlocStatus.loading));
 
     try {
-      final CepModel address = await repository.fetchCep(cep: event.cep);   
-      emit(state.copyWith(status: BlocStatus.success, address: address));
-
+      final CepModel address = await repository.fetchCep(cep: event.cep);
+      if (isEmptyAddress(address)) {
+        emit(state.copyWith(
+          status: BlocStatus.success,
+          address: address,
+          isEmpty: true,
+        ));
+      } else {
+        emit(state.copyWith(
+          status: BlocStatus.success,
+          isEmpty: false,
+        ));
+      }
     } catch (error) {
       emit(state.copyWith(
-        status: BlocStatus.error,
-        errorMessage: 'Error loading data ViaCep...'
-      ));
+          status: BlocStatus.error,
+          errorMessage: 'Error loading data ViaCep...'));
     }
   }
 
@@ -37,4 +46,8 @@ class CepBloc extends Bloc<CepEvent, CepState> {
   void _onAddCep(CreateCep event, Emitter<CepState> emit) {}
   void _onUpdateCep(UpdateCep event, Emitter<CepState> emit) {}
   void _onDeleteCep(DeleteCep event, Emitter<CepState> emit) {}
+
+  bool isEmptyAddress(CepModel address) {
+    return address.bairro.isEmpty || address.cep.isEmpty;
+  }
 }

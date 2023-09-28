@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud_back4app/repositories/cep_repository.dart';
 import 'package:flutter_crud_back4app/screens/home_screen.dart';
 import 'package:flutter_crud_back4app/utils/theme.dart';
-
 import 'blocs/cep/blocs_exports.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
   runApp(const MyApp());
 }
 
