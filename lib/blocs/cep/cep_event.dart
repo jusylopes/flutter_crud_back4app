@@ -15,13 +15,13 @@ class GetCep extends CepEvent {
 }
 
 class CreateCep extends CepEvent {
-  final String cep;
+  final CepModel newCep;
   const CreateCep({
-    required this.cep,
+    required this.newCep,
   });
 
   @override
-  List<Object> get props => [cep];
+  List<Object?> get props => [newCep];
 }
 
 class GetAllCeps extends CepEvent {

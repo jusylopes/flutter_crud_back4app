@@ -1,13 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_back4app/blocs/cep/blocs_exports.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-
 class CepFormField extends StatefulWidget {
-  const CepFormField({
-    super.key,
-  });
+  const CepFormField({super.key});
 
   @override
   State<CepFormField> createState() => _CepFormFieldState();
@@ -25,6 +21,12 @@ class _CepFormFieldState extends State<CepFormField> {
   _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+    }
+  }
+
+  _submitCep(String? value) {
+    if (_formKey.currentState?.validate() ?? false) {
+      BlocProvider.of<CepBloc>(context).add(GetCep(cep: value ?? ''));
     }
   }
 
@@ -54,12 +56,8 @@ class _CepFormFieldState extends State<CepFormField> {
             filter: {"#": RegExp(r'[0-9]')},
           ),
         ],
-        onSaved: (value) {
-          if (_formKey.currentState?.validate() ?? false) {
-            BlocProvider.of<CepBloc>(context).add(GetCep(cep: value ?? ''));
-          }
-        },
-        onFieldSubmitted: (_) => _submitForm(),
+        onSaved: (value) => _submitCep(value),
+        onFieldSubmitted: (value) => _submitCep(value),
         validator: (value) {
           if (value == null || value.isEmpty || value.length != 9) {
             return 'Formato de CEP inválido';

@@ -43,7 +43,22 @@ class CepBloc extends Bloc<CepEvent, CepState> {
   }
 
   void _onGetAllCeps(GetAllCeps event, Emitter<CepState> emit) {}
-  void _onAddCep(CreateCep event, Emitter<CepState> emit) {}
+
+  void _onAddCep(CreateCep event, Emitter<CepState> emit) async {
+    emit(state.copyWith(status: BlocStatus.loading));
+
+    try {
+      await repository.addCep(event.newCep);
+
+      emit(state.copyWith(status: BlocStatus.success));
+    } catch (error) {
+      emit(state.copyWith(
+        status: BlocStatus.error,
+        errorMessage: '$error',
+      ));
+    }
+  }
+
   void _onUpdateCep(UpdateCep event, Emitter<CepState> emit) {}
   void _onDeleteCep(DeleteCep event, Emitter<CepState> emit) {}
 

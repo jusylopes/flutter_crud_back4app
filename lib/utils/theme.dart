@@ -4,21 +4,30 @@ import 'package:flutter_crud_back4app/utils/colors.dart';
 
 abstract class AppTheme {
   static ThemeData get light => ThemeData(
-        primarySwatch: AppColors.colorPrimarySwatch,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: AssetsManager.fontFamily,
-        scaffoldBackgroundColor: AppColors.colorBackground,
-        appBarTheme: AppBarTheme(
-          centerTitle: true,
-          backgroundColor: AppColors.colorBackground,
-          titleTextStyle: TextStyle(
-              fontFamily: AssetsManager.fontFamily,
-              fontSize: 33.0,
-              color: AppColors.primaryColor,
-              fontWeight: FontWeight.bold),
+      primarySwatch: AppColors.colorPrimarySwatch,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      fontFamily: AssetsManager.fontFamily,
+      scaffoldBackgroundColor: AppColors.colorBackground,
+      appBarTheme: AppBarTheme(
+        backgroundColor: AppColors.colorBackground,
+        titleTextStyle: TextStyle(
+            fontFamily: AssetsManager.fontFamily,
+            fontSize: 20.0,
+            color: AppColors.primaryColor,
+            fontWeight: FontWeight.bold),
+      ),
+      textTheme: _buildTextTheme(),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          textStyle: const TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-        textTheme: _buildTextTheme(),
-      );
+      ));
 
   static TextTheme _buildTextTheme() {
     return const TextTheme(
