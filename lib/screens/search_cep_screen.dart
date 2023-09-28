@@ -4,6 +4,7 @@ import 'package:flutter_crud_back4app/blocs/cep/enum/bloc_status.dart';
 import 'package:flutter_crud_back4app/components/cep_form_field.dart';
 import 'package:flutter_crud_back4app/components/cep_information_card.dart';
 import 'package:flutter_crud_back4app/components/error_message_app.dart';
+import 'package:flutter_crud_back4app/screens/register_cep_screen.dart';
 import 'package:flutter_crud_back4app/utils/assets_manager.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
 
@@ -56,11 +57,10 @@ class _SearchCepScreenState extends State<SearchCepScreen> {
                     return const CircularProgressIndicator();
                   case BlocStatus.success:
                     if (state.isEmpty) {
-                      return (const Text('NÃO CADASTRADO'));
+                      return (const RegisterAddress());
                     } else {
                       return CepInformationCard(address: address!);
                     }
-
                   case BlocStatus.error:
                     return ErrorMessageViaCep(
                       errorMessage: state.errorMessage!,
@@ -69,6 +69,42 @@ class _SearchCepScreenState extends State<SearchCepScreen> {
               },
             ),
           )),
+    );
+  }
+}
+
+class RegisterAddress extends StatelessWidget {
+  const RegisterAddress({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'CEP não encontrado',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Container(
+          width: 200,
+          height: 50,
+          margin: const EdgeInsets.all(15),
+          child: ElevatedButton(
+            child: const Text(
+              'Cadastrar CEP',
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RegisterCepScreen()),
+              );
+            },
+          ),
+        )
+      ],
     );
   }
 }
