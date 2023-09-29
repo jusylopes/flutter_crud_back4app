@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_back4app/blocs/cep/blocs_exports.dart';
 import 'package:flutter_crud_back4app/blocs/cep/enum/bloc_status.dart';
+import 'package:flutter_crud_back4app/blocs/cep/register/register_blocs_exports.dart';
 import 'package:flutter_crud_back4app/components/error_message_app.dart';
 import 'package:flutter_crud_back4app/models/cep_model.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
@@ -16,7 +16,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<CepBloc>(context).add(const GetAllCeps());
+    BlocProvider.of<RegisterCepBloc>(context).add(const GetAllCeps());
   }
 
   @override
@@ -34,7 +34,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           toolbarHeight: 80,
         ),
         body: Center(
-          child: BlocBuilder<CepBloc, CepState>(
+          child: BlocBuilder<RegisterCepBloc, RegisterCepState>(
             builder: (context, state) {
               switch (state.status) {
                 case BlocStatus.initial:
@@ -42,18 +42,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 case BlocStatus.loading:
                   return const CircularProgressIndicator();
                 case BlocStatus.success:
-                  final List<CepModel> addressList = state.data;
-
                   return ListView.builder(
                       itemCount: state.data.length,
                       itemBuilder: (context, index) {
-                        final CepModel address = addressList[index];
+                        final CepModel address = state.data[index];
 
-                        Text(
-                          address.bairro,
-                          style: Theme.of(context).textTheme.titleMedium,
+                        print(address.bairro);
+                        return Text(
+                          address.cep,
+                          style: Theme.of(context).textTheme.titleLarge,
                         );
-                        return null;
                       });
                 case BlocStatus.error:
                   return ErrorMessageViaCep(
