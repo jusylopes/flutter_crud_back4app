@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_back4app/screens/historic_cep_screen.dart';
+import 'package:flutter_crud_back4app/screens/history_cep_screen.dart';
 import 'package:flutter_crud_back4app/screens/search_cep_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,14 +16,14 @@ class _HomeScreenState extends State<HomeScreen> {
       label: 'Home',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.note),
+      icon: Icon(Icons.edit_note),
       label: 'Cadastrados',
     ),
   ];
 
   final List<Widget> _screens = [
     const SearchCepScreen(),
-    const HistoricScreen(),
+    const HistoryScreen(),
   ];
 
   int _selectedIndex = 0;

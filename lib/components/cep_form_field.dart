@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_back4app/blocs/cep/blocs_exports.dart';
+import 'package:flutter_crud_back4app/blocs/cep/search/search_cep_blocs_exports.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CepFormField extends StatefulWidget {
@@ -26,7 +26,7 @@ class _CepFormFieldState extends State<CepFormField> {
 
   _submitCep(String? value) {
     if (_formKey.currentState?.validate() ?? false) {
-      BlocProvider.of<CepBloc>(context).add(GetCep(cep: value ?? ''));
+      BlocProvider.of<SearchCepBloc>(context).add(GetCep(cep: value ?? ''));
     }
   }
 

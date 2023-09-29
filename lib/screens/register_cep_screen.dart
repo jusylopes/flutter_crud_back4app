@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_back4app/blocs/cep/enum/bloc_status.dart';
+import 'package:flutter_crud_back4app/blocs/cep/register/register_blocs_exports.dart';
 import 'package:flutter_crud_back4app/components/cep_form_field_register.dart';
 import 'package:flutter_crud_back4app/components/text_form_field_register.dart';
 import 'package:flutter_crud_back4app/models/cep_model.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
-import '../blocs/cep/blocs_exports.dart';
 
 class RegisterCepScreen extends StatefulWidget {
   const RegisterCepScreen({super.key});
@@ -43,7 +43,7 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
   }
 
   void _addAdress() {
-    BlocProvider.of<CepBloc>(context).add(CreateCep(
+    BlocProvider.of<RegisterCepBloc>(context).add(CreateCep(
         newCep: CepModel(
       cep: _cepController.text,
       logradouro: _logradouroController.text,
@@ -146,7 +146,7 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
                   ),
                 ],
               ),
-              BlocListener<CepBloc, CepState>(
+              BlocListener<RegisterCepBloc, RegisterCepState>(
                 listener: (context, state) {
                   switch (state.status) {
                     case BlocStatus.initial:

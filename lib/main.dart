@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_crud_back4app/blocs/cep/register/register_blocs_exports.dart';
+import 'package:flutter_crud_back4app/blocs/cep/search/search_cep_blocs_exports.dart';
 import 'package:flutter_crud_back4app/repositories/cep_repository.dart';
 import 'package:flutter_crud_back4app/screens/home_screen.dart';
 import 'package:flutter_crud_back4app/utils/theme.dart';
-import 'blocs/cep/blocs_exports.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -17,11 +18,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<CepBloc>(
-            create: (_) => CepBloc(
-                    repository: CepRepository(
-                  dio: Dio(),
-                ))),
+        BlocProvider<RegisterCepBloc>(
+          create: (_) => RegisterCepBloc(
+            repository: CepRepository(
+              dio: Dio(),
+            ),
+          ),
+        ),
+        BlocProvider<SearchCepBloc>(
+          create: (_) => SearchCepBloc(
+            repository: CepRepository(
+              dio: Dio(),
+            ),
+          ),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

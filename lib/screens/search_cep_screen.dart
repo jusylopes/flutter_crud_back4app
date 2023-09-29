@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_back4app/blocs/cep/blocs_exports.dart';
 import 'package:flutter_crud_back4app/blocs/cep/enum/bloc_status.dart';
+import 'package:flutter_crud_back4app/blocs/cep/search/search_cep_bloc.dart';
+import 'package:flutter_crud_back4app/blocs/cep/search/search_cep_blocs_exports.dart';
 import 'package:flutter_crud_back4app/components/cep_form_field.dart';
 import 'package:flutter_crud_back4app/components/cep_information_card.dart';
 import 'package:flutter_crud_back4app/components/error_message_app.dart';
+import 'package:flutter_crud_back4app/models/cep_model.dart';
 import 'package:flutter_crud_back4app/screens/register_cep_screen.dart';
 import 'package:flutter_crud_back4app/utils/assets_manager.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
@@ -46,10 +48,8 @@ class _SearchCepScreenState extends State<SearchCepScreen> {
             toolbarHeight: MediaQuery.of(context).size.height / 4,
           ),
           body: Center(
-            child: BlocBuilder<CepBloc, CepState>(
+            child: BlocBuilder<SearchCepBloc, SearchCepState>(
               builder: (context, state) {
-                final address = state.address;
-
                 switch (state.status) {
                   case BlocStatus.initial:
                     return const Center();
@@ -59,7 +59,7 @@ class _SearchCepScreenState extends State<SearchCepScreen> {
                     if (state.isEmpty) {
                       return (const RegisterAddress());
                     } else {
-                      return CepInformationCard(address: address!);
+                      return CepInformationCard(address: state.address!);
                     }
                   case BlocStatus.error:
                     return ErrorMessageViaCep(
