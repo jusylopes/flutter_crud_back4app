@@ -22,18 +22,19 @@ class GetAllCeps extends RegisterCepEvent {
 }
 
 class UpdateCep extends RegisterCepEvent {
-  final UpdateCep updateCep;
+  final CepModel updatedCep;
   const UpdateCep({
-    required this.updateCep,
+    required this.updatedCep,
   });
 
   @override
-  List<Object> get props => [updateCep];
+  List<Object> get props => [updatedCep];
 }
 
 class DeleteCep extends RegisterCepEvent {
-  const DeleteCep();
+  final String objectId;
+  const DeleteCep(this.objectId);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [objectId];
 }

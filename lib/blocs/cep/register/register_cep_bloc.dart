@@ -22,7 +22,7 @@ class RegisterCepBloc extends Bloc<RegisterCepEvent, RegisterCepState> {
     emit(state.copyWith(status: BlocStatus.loading));
 
     try {
-      final List<CepModel> allCeps = await repository.getAllCeps();
+      final List<CepModel> allCeps = await repository.fetchAllCeps();
       emit(state.copyWith(status: BlocStatus.success, data: allCeps));
     } catch (error) {
       emit(state.copyWith(
@@ -46,8 +46,34 @@ class RegisterCepBloc extends Bloc<RegisterCepEvent, RegisterCepState> {
     }
   }
 
-  void _onUpdateCep(UpdateCep event, Emitter<RegisterCepState> emit) {}
-  void _onDeleteCep(DeleteCep event, Emitter<RegisterCepState> emit) {}
+  void _onUpdateCep(UpdateCep event, Emitter<RegisterCepState> emit) async {
+    emit(state.copyWith(status: BlocStatus.loading));
+
+    try {
+       await repository.updateCep(event.updatedCep);
+
+       emit(state.copyWith(status: BlocStatus.success));
+
+    } catch (error) {
+      emit(state.copyWith(
+        status: BlocStatus.error,
+        errorMessage: '$error',
+      ));
+    }
+  }
+
+  void _onDeleteCep(DeleteCep event, Emitter<RegisterCepState> emit) async {
+    emit(state.copyWith(status: BlocStatus.loading));
+
+    try {
+      await repository.deleteCep(event.objectId); 
+
+      emit(state.copyWith(status: BlocStatus.success));
+    } catch (error) {
+      emit(state.copyWith(
+        status: BlocStatus.error,
+        errorMessage: '$error',
+      ));
+    }
+  }
 }
-
-
