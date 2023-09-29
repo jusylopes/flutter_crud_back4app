@@ -21,7 +21,7 @@ class CreateCep extends CepEvent {
   });
 
   @override
-  List<Object?> get props => [newCep];
+  List<Object> get props => [newCep];
 }
 
 class GetAllCeps extends CepEvent {

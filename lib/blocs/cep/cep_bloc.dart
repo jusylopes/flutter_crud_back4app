@@ -18,20 +18,22 @@ class CepBloc extends Bloc<CepEvent, CepState> {
   }
 
   final CepRepository repository;
+
   void _onGetCep(GetCep event, Emitter<CepState> emit) async {
     emit(state.copyWith(status: BlocStatus.loading));
 
     try {
       final CepModel address = await repository.fetchCep(cep: event.cep);
+
       if (isEmptyAddress(address)) {
         emit(state.copyWith(
           status: BlocStatus.success,
-          address: address,
           isEmpty: true,
         ));
       } else {
         emit(state.copyWith(
           status: BlocStatus.success,
+          address: address,
           isEmpty: false,
         ));
       }
@@ -42,7 +44,21 @@ class CepBloc extends Bloc<CepEvent, CepState> {
     }
   }
 
-  void _onGetAllCeps(GetAllCeps event, Emitter<CepState> emit) {}
+  void _onGetAllCeps(GetAllCeps event, Emitter<CepState> emit) async {
+    emit(state.copyWith(status: BlocStatus.loading));
+
+    try {
+      final List<CepModel> allCeps = await repository.getAllCeps();
+
+      emit(state.copyWith(
+        status: BlocStatus.success,
+      ));
+    } catch (error) {
+      emit(state.copyWith(
+          status: BlocStatus.error,
+          errorMessage: 'Error loading data Back4App...'));
+    }
+  }
 
   void _onAddCep(CreateCep event, Emitter<CepState> emit) async {
     emit(state.copyWith(status: BlocStatus.loading));
