@@ -1,32 +1,32 @@
-part of 'cep_bloc.dart';
+part of 'register_cep_bloc.dart';
 
-class CepState extends Equatable {
-  const CepState({
+class RegisterCepState<T> extends Equatable {
+  const RegisterCepState({
     required this.status,
-    this.address,
+    this.data,
     this.errorMessage,
     this.isEmpty = false,
   });
 
   final BlocStatus status;
-  final CepModel? address;
+  final T? data;
   final String? errorMessage;
   final bool isEmpty;
 
-  CepState copyWith({
+  RegisterCepState copyWith({
     BlocStatus? status,
-    CepModel? address,
+    T? data,
     String? errorMessage,
     final bool? isEmpty,
   }) {
-    return CepState(
+    return RegisterCepState(
       status: status ?? this.status,
-      address: address ?? this.address,
+      data: data ?? this.data,
       errorMessage: errorMessage ?? this.errorMessage,
       isEmpty: isEmpty ?? this.isEmpty,
     );
   }
 
   @override
-  List<Object?> get props => [status, address, errorMessage, isEmpty];
+  List<Object?> get props => [status, data, errorMessage, isEmpty];
 }
