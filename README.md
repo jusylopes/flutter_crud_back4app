@@ -1,16 +1,26 @@
-# flutter_crud_back4app
+# 📫 CRUD Back4app
+## Sobre o projeto
 
-A new Flutter project.
+O aplicativo utiliza a API [VIA CEP](https://viacep.com.br) para consultar informações de CEP e, realiza operações CRUD (Create, Read, Update, Delete) para endereços, armazenando os dados com o serviço [Back4App](https://www.back4app.com). 
+Isso permite aos usuários criar novos registros de endereços, atualizar informações existentes e excluir entradas quando necessário.
 
-## Getting Started
+## Screenshots
+<p>
+<img src="screenshots/Screenshot_1.png" width="19%">
+<img src="screenshots/Screenshot_2.png" width="19%">
+<img src="screenshots/Screenshot_3.png" width="19%">
+<img src="screenshots/Screenshot_4.png" width="19%">
+</p>
 
-This project is a starting point for a Flutter application.
+### Tecnologias utilizadas
 
-A few resources to get you started if this is your first Flutter project:
+* Flutter
+* Bloc
+* Back4App
+* ViaCep API
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Desenvolvedora
+
+Jusy Lopes
+https://www.linkedin.com/in/jusylopes
