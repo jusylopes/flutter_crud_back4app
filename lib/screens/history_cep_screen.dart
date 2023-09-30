@@ -3,6 +3,8 @@ import 'package:flutter_crud_back4app/blocs/cep/enum/bloc_status.dart';
 import 'package:flutter_crud_back4app/blocs/cep/register/register_blocs_exports.dart';
 import 'package:flutter_crud_back4app/components/error_message_app.dart';
 import 'package:flutter_crud_back4app/models/cep_model.dart';
+import 'package:flutter_crud_back4app/screens/update_cep_screen.dart';
+import 'package:flutter_crud_back4app/utils/assets_manager.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -38,21 +40,49 @@ class _HistoryScreenState extends State<HistoryScreen> {
             builder: (context, state) {
               switch (state.status) {
                 case BlocStatus.initial:
-                  return const Center();
                 case BlocStatus.loading:
-                  return const CircularProgressIndicator();
                 case BlocStatus.success:
                   return ListView.builder(
-                      itemCount: state.data.length,
-                      itemBuilder: (context, index) {
-                        final CepModel address = state.data[index];
+                    itemCount: state.data.length,
+                    itemBuilder: (context, index) {
+                      final CepModel address = state.data[index];
 
-                        print(address.bairro);
-                        return Text(
+                      return ListTile(
+                        contentPadding: const EdgeInsets.all(10),
+                        leading: Image.asset(AssetsManager.imageIconSearch),
+                        title: Text(
                           address.cep,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        );
-                      });
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        subtitle: Text(
+                          address.bairro,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        trailing: Wrap(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UpdateCepScreen(
+                                              address: address,
+                                            )),
+                                  );
+                                },
+                                icon: const Icon(Icons.edit)),
+                            IconButton(
+                                onPressed: () {
+                                  _confirmDismissDialog(
+                                      context: context,
+                                      objectId: address.objectId!);
+                                },
+                                icon: const Icon(Icons.delete))
+                          ],
+                        ),
+                      );
+                    },
+                  );
                 case BlocStatus.error:
                   return ErrorMessageViaCep(
                     errorMessage: state.errorMessage!,
@@ -61,5 +91,32 @@ class _HistoryScreenState extends State<HistoryScreen> {
             },
           ),
         ));
+  }
+
+  Future<bool?> _confirmDismissDialog(
+      {required BuildContext context, required String objectId}) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmar'),
+          content:
+              const Text('Tem certeza de que deseja remover este endereço?'),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  BlocProvider.of<RegisterCepBloc>(context)
+                      .add(DeleteCep(objectId));
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('REMOVER')),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('CANCELAR'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
