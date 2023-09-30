@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class CepModel {
+  final String? objectId;
   final String cep;
   final String logradouro;
   final String complemento;
@@ -12,6 +13,7 @@ class CepModel {
   final String ddd;
   final String siafi;
   CepModel({
+    this.objectId,
     required this.cep,
     required this.logradouro,
     required this.complemento,
@@ -25,6 +27,7 @@ class CepModel {
   });
 
   CepModel copyWith({
+    String? objectId,
     String? cep,
     String? logradouro,
     String? complemento,
@@ -37,6 +40,7 @@ class CepModel {
     String? siafi,
   }) {
     return CepModel(
+      objectId: objectId ?? this.objectId,
       cep: cep ?? this.cep,
       logradouro: logradouro ?? this.logradouro,
       complemento: complemento ?? this.complemento,
@@ -53,6 +57,7 @@ class CepModel {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
+    result.addAll({'objectId': objectId});
     result.addAll({'cep': cep});
     result.addAll({'logradouro': logradouro});
     result.addAll({'complemento': complemento});
@@ -69,6 +74,7 @@ class CepModel {
 
   factory CepModel.fromMap(Map<String, dynamic> map) {
     return CepModel(
+      objectId: map['objectId'] ?? '',
       cep: map['cep'] ?? '',
       logradouro: map['logradouro'] ?? '',
       complemento: map['complemento'] ?? '',
