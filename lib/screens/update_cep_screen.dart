@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_back4app/blocs/cep/enum/bloc_status.dart';
-
+import 'package:flutter_crud_back4app/blocs/enum/bloc_status.dart';
+import 'package:flutter_crud_back4app/blocs/register/register_blocs_exports.dart';
 import 'package:flutter_crud_back4app/components/cep_form_field_register.dart';
 import 'package:flutter_crud_back4app/components/text_form_field_register.dart';
-
 import 'package:flutter_crud_back4app/models/cep_model.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
 
-import '../blocs/cep/register/register_blocs_exports.dart';
+
 
 class UpdateCepScreen extends StatefulWidget {
   final CepModel address;

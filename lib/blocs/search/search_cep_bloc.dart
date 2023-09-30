@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_crud_back4app/blocs/cep/search/search_cep_blocs_exports.dart';
+import 'package:flutter_crud_back4app/blocs/search/search_cep_blocs_exports.dart';
 import 'package:flutter_crud_back4app/models/cep_model.dart';
-import 'package:flutter_crud_back4app/blocs/cep/enum/bloc_status.dart';
+import 'package:flutter_crud_back4app/blocs/enum/bloc_status.dart';
 import 'package:flutter_crud_back4app/repositories/cep_repository.dart';
 
 part 'search_cep_event.dart';

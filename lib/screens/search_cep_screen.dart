@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_back4app/blocs/cep/enum/bloc_status.dart';
-import 'package:flutter_crud_back4app/blocs/cep/search/search_cep_blocs_exports.dart';
+import 'package:flutter_crud_back4app/blocs/enum/bloc_status.dart';
+import 'package:flutter_crud_back4app/blocs/search/search_cep_blocs_exports.dart';
 import 'package:flutter_crud_back4app/components/cep_information_card.dart';
 import 'package:flutter_crud_back4app/components/error_message_app.dart';
 import 'package:flutter_crud_back4app/screens/register_cep_screen.dart';

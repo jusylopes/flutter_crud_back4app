@@ -5,13 +5,13 @@ class CepRepository {
   final Dio dio;
 
   CepRepository({required this.dio}) {
-    dio.options.baseUrl = 'https://parseapi.back4app.com/classes/ceps';
-    dio.options.headers['X-Parse-Application-Id'] =
-        'ERhH6AhhVuC3E6GQUdfJyhKPGkix1tUn2za6Aphi';
-    dio.options.headers['X-Parse-REST-API-Key'] =
-        'WKfHT2wViz4eoMpY3w3bGZgs76s6dwO7ROhDxB8L';
+    dio.options.headers['X-Parse-Application-Id'] = '';
+    dio.options.headers['X-Parse-REST-API-Key'] = '';
     dio.options.headers['Content-Type'] = 'application/json';
   }
+
+  static const String _baseUrlBack4app =
+      "https://parseapi.back4app.com/classes/ceps";
 
   Future<CepModel> fetchCep({required String cep}) async {
     try {
@@ -31,7 +31,7 @@ class CepRepository {
   Future<void> addCep(CepModel newCep) async {
     try {
       await dio.post(
-        '/',
+        _baseUrlBack4app,
         data: newCep.toJson(),
       );
     } catch (e) {
@@ -39,14 +39,35 @@ class CepRepository {
     }
   }
 
-  Future<List<CepModel>> getListCep() async {
+  Future<List<CepModel>> fetchAllCeps() async {
     try {
-      Response response = await dio.get('/');
-      final data = response.data;
-      final List<CepModel> ceps =
-          data.map((item) => CepModel.fromJson(item)).toList();
+      Response response = await dio.get(_baseUrlBack4app);
+
+      final data = response.data['results'] as List<dynamic>;
+      final List<CepModel> ceps = data
+          .map((item) => CepModel.fromMap(item as Map<String, dynamic>))
+          .toList();
 
       return ceps;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteCep(String objectId) async {
+    try {
+      await dio.delete('$_baseUrlBack4app/$objectId');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateCep(CepModel updatedCep) async {
+    try {
+      await dio.put(
+        '$_baseUrlBack4app/${updatedCep.objectId}',
+        data: updatedCep.toJson(),
+      );
     } catch (e) {
       rethrow;
     }

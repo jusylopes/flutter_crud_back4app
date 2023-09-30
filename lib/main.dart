@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_back4app/blocs/cep/register/register_blocs_exports.dart';
-import 'package:flutter_crud_back4app/blocs/cep/search/search_cep_blocs_exports.dart';
+import 'package:flutter_crud_back4app/blocs/register/register_blocs_exports.dart';
+import 'package:flutter_crud_back4app/blocs/search/search_cep_blocs_exports.dart';
 import 'package:flutter_crud_back4app/repositories/cep_repository.dart';
 import 'package:flutter_crud_back4app/screens/home_screen.dart';
 import 'package:flutter_crud_back4app/utils/theme.dart';
