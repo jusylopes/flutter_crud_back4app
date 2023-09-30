@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_crud_back4app/blocs/cep/enum/bloc_status.dart';
 import 'package:flutter_crud_back4app/blocs/cep/register/register_blocs_exports.dart';
 import 'package:flutter_crud_back4app/components/cep_form_field_register.dart';
@@ -7,7 +8,12 @@ import 'package:flutter_crud_back4app/models/cep_model.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
 
 class RegisterCepScreen extends StatefulWidget {
-  const RegisterCepScreen({super.key});
+  final String inicialCep;
+
+  const RegisterCepScreen({
+    Key? key,
+    required this.inicialCep,
+  }) : super(key: key);
 
   @override
   State<RegisterCepScreen> createState() => _RegisterCepScreenState();
@@ -30,7 +36,7 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
-    _cepController = TextEditingController();
+    _cepController = TextEditingController(text: widget.inicialCep);
     _logradouroController = TextEditingController();
     _complementoController = TextEditingController();
     _bairroController = TextEditingController();
@@ -60,128 +66,136 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cadastro de CEP'),
-        leading: BackButton(
-          onPressed: () => Navigator.of(context).pop(),
-          color: AppColors.primaryColor,
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2),
-          child: Container(
-            color: AppColors.secondaryColor,
-            height: 2,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Cadastro de Endereço'),
+          leading: BackButton(
+            onPressed: () => Navigator.of(context).pop(),
+            color: AppColors.primaryColor,
           ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(2),
+            child: Container(
+              color: AppColors.secondaryColor,
+              height: 2,
+            ),
+          ),
+          toolbarHeight: 80,
         ),
-        toolbarHeight: 80,
-      ),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              CepFormFieldRegister(formController: _cepController),
-              TextFormFieldRegister(
-                textFormController: _logradouroController,
-                label: 'Logradouro',
-                textInputType: TextInputType.text,
-              ),
-              TextFormFieldRegister(
-                textFormController: _complementoController,
-                label: 'Complemento',
-                textInputType: TextInputType.text,
-              ),
-              TextFormFieldRegister(
-                textFormController: _bairroController,
-                label: 'Bairro',
-                textInputType: TextInputType.text,
-              ),
-              TextFormFieldRegister(
-                textFormController: _localidadeController,
-                label: 'Localidade',
-                textInputType: TextInputType.text,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormFieldRegister(
-                      textFormController: _ufController,
-                      label: 'UF',
-                      textInputType: TextInputType.text,
-                    ),
-                  ),
-                  Expanded(
-                    child: TextFormFieldRegister(
-                      textFormController: _dddController,
-                      label: 'DDD',
-                      textInputType: TextInputType.number,
-                    ),
-                  ),
-                ],
-              ),
-              TextFormFieldRegister(
-                textFormController: _ibgeController,
-                label: 'IBGE',
-                textInputType: TextInputType.number,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormFieldRegister(
-                      textFormController: _giaController,
-                      label: 'GIA',
-                      textInputType: TextInputType.number,
-                    ),
-                  ),
-                  Expanded(
-                    child: TextFormFieldRegister(
-                      textFormController: _siafiController,
-                      label: 'SIAFI',
-                      textInputType: TextInputType.number,
-                    ),
-                  ),
-                ],
-              ),
-              BlocListener<RegisterCepBloc, RegisterCepState>(
-                listener: (context, state) {
-                  switch (state.status) {
-                    case BlocStatus.initial:
-                    case BlocStatus.loading:
-                    case BlocStatus.success:
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Cadastro realizado com sucesso!'),
-                        ),
-                      );
-                      _clearControllers();
-
-                    case BlocStatus.error:
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                              'Erro ao realizar cadastro! ${state.errorMessage}'),
-                        ),
-                      );
-                  }
-                },
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  margin: const EdgeInsets.all(15),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _addAdress();
-                        }
-                      },
-                      child: const Text('Cadastrar CEP')),
+        body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-            ],
+                CepFormFieldRegister(formController: _cepController),
+                TextFormFieldRegister(
+                  textFormController: _logradouroController,
+                  label: 'Logradouro',
+                  textInputType: TextInputType.text,
+                ),
+                TextFormFieldRegister(
+                  textFormController: _complementoController,
+                  label: 'Complemento',
+                  textInputType: TextInputType.text,
+                ),
+                TextFormFieldRegister(
+                  textFormController: _bairroController,
+                  label: 'Bairro',
+                  textInputType: TextInputType.text,
+                ),
+                TextFormFieldRegister(
+                  textFormController: _localidadeController,
+                  label: 'Localidade',
+                  textInputType: TextInputType.text,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormFieldRegister(
+                        textFormController: _ufController,
+                        label: 'UF',
+                        textInputType: TextInputType.text,
+                      ),
+                    ),
+                    Expanded(
+                      child: TextFormFieldRegister(
+                        textFormController: _dddController,
+                        label: 'DDD',
+                        textInputType: TextInputType.number,
+                      ),
+                    ),
+                  ],
+                ),
+                TextFormFieldRegister(
+                  textFormController: _ibgeController,
+                  label: 'IBGE',
+                  textInputType: TextInputType.number,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormFieldRegister(
+                        textFormController: _giaController,
+                        label: 'GIA',
+                        textInputType: TextInputType.number,
+                      ),
+                    ),
+                    Expanded(
+                      child: TextFormFieldRegister(
+                        textFormController: _siafiController,
+                        label: 'SIAFI',
+                        textInputType: TextInputType.number,
+                      ),
+                    ),
+                  ],
+                ),
+                BlocListener<RegisterCepBloc, RegisterCepState>(
+                  listener: (context, state) {
+                    switch (state.status) {
+                      case BlocStatus.initial:
+                      case BlocStatus.loading:
+                      case BlocStatus.success:
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Cadastro realizado com sucesso!'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+
+                        _clearControllers();
+
+                      case BlocStatus.error:
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                'Erro ao realizar cadastro! ${state.errorMessage}'),
+                          ),
+                        );
+                    }
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 50,
+                    margin: const EdgeInsets.all(15),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _addAdress();
+                            FocusScope.of(context).unfocus();
+                          }
+                        },
+                        child: const Text('Cadastrar Endereço')),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
