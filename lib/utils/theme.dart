@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_back4app/utils/assets_manager.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
+import 'package:flutter_crud_back4app/utils/no_transition_screen.dart';
 
 abstract class AppTheme {
   static ThemeData get light => ThemeData(
@@ -17,6 +18,12 @@ abstract class AppTheme {
             fontWeight: FontWeight.bold),
       ),
       textTheme: _buildTextTheme(),
+      pageTransitionsTheme: PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: NoTransitionsScreen(),
+          TargetPlatform.iOS: NoTransitionsScreen(),
+        },
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           shape:
