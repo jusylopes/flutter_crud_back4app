@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_crud_back4app/blocs/enum/bloc_status.dart';
 import 'package:flutter_crud_back4app/blocs/register/register_blocs_exports.dart';
 import 'package:flutter_crud_back4app/components/cep_form_field_register.dart';
+import 'package:flutter_crud_back4app/components/custom_dropdown_button.dart';
 import 'package:flutter_crud_back4app/components/text_form_field_register.dart';
 import 'package:flutter_crud_back4app/models/cep_model.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
-
-
 
 class UpdateCepScreen extends StatefulWidget {
   final CepModel address;
@@ -27,11 +26,11 @@ class _UpdateCepScreenState extends State<UpdateCepScreen> {
   late final TextEditingController _complementoController;
   late final TextEditingController _bairroController;
   late final TextEditingController _localidadeController;
-  late final TextEditingController _ufController;
   late final TextEditingController _ibgeController;
   late final TextEditingController _giaController;
   late final TextEditingController _dddController;
   late final TextEditingController _siafiController;
+  String? _selectedStateAbbreviations;
 
   @override
   void initState() {
@@ -44,7 +43,7 @@ class _UpdateCepScreenState extends State<UpdateCepScreen> {
     _complementoController = TextEditingController(text: address.complemento);
     _bairroController = TextEditingController(text: address.bairro);
     _localidadeController = TextEditingController(text: address.localidade);
-    _ufController = TextEditingController(text: address.uf);
+    _selectedStateAbbreviations = address.uf;
     _ibgeController = TextEditingController(text: address.ibge);
     _giaController = TextEditingController(text: address.gia);
     _dddController = TextEditingController(text: address.ddd);
@@ -60,7 +59,7 @@ class _UpdateCepScreenState extends State<UpdateCepScreen> {
       complemento: _complementoController.text,
       bairro: _bairroController.text,
       localidade: _localidadeController.text,
-      uf: _ufController.text,
+      uf: _selectedStateAbbreviations ?? '',
       ibge: _ibgeController.text,
       gia: _giaController.text,
       ddd: _dddController.text,
@@ -122,10 +121,13 @@ class _UpdateCepScreenState extends State<UpdateCepScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: TextFormFieldRegister(
-                        textFormController: _ufController,
-                        label: 'UF',
-                        textInputType: TextInputType.text,
+                      child: CustomDropdownButton(
+                        value: _selectedStateAbbreviations,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _selectedStateAbbreviations = newValue;
+                          });
+                        },
                       ),
                     ),
                     Expanded(
@@ -212,7 +214,7 @@ class _UpdateCepScreenState extends State<UpdateCepScreen> {
     _complementoController.dispose();
     _bairroController.dispose();
     _localidadeController.dispose();
-    _ufController.dispose();
+
     _ibgeController.dispose();
     _giaController.dispose();
     _dddController.dispose();
