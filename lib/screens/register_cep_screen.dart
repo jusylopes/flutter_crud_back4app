@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_crud_back4app/blocs/enum/bloc_status.dart';
 import 'package:flutter_crud_back4app/blocs/register/register_blocs_exports.dart';
 import 'package:flutter_crud_back4app/components/cep_form_field_register.dart';
+import 'package:flutter_crud_back4app/components/custom_dropdown_button.dart';
 import 'package:flutter_crud_back4app/components/text_form_field_register.dart';
 import 'package:flutter_crud_back4app/models/cep_model.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
@@ -26,11 +26,11 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
   late final TextEditingController _complementoController;
   late final TextEditingController _bairroController;
   late final TextEditingController _localidadeController;
-  late final TextEditingController _ufController;
   late final TextEditingController _ibgeController;
   late final TextEditingController _giaController;
   late final TextEditingController _dddController;
   late final TextEditingController _siafiController;
+  String? _selectedStateAbbreviations;
 
   @override
   void initState() {
@@ -41,7 +41,6 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
     _complementoController = TextEditingController();
     _bairroController = TextEditingController();
     _localidadeController = TextEditingController();
-    _ufController = TextEditingController();
     _ibgeController = TextEditingController();
     _giaController = TextEditingController();
     _dddController = TextEditingController();
@@ -49,6 +48,8 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
   }
 
   void _addAdress() {
+    print(_selectedStateAbbreviations);
+
     BlocProvider.of<RegisterCepBloc>(context).add(CreateCep(
         newCep: CepModel(
       cep: _cepController.text,
@@ -56,7 +57,7 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
       complemento: _complementoController.text,
       bairro: _bairroController.text,
       localidade: _localidadeController.text,
-      uf: _ufController.text,
+      uf: _selectedStateAbbreviations ?? '',
       ibge: _ibgeController.text,
       gia: _giaController.text,
       ddd: _dddController.text,
@@ -118,10 +119,13 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: TextFormFieldRegister(
-                        textFormController: _ufController,
-                        label: 'UF',
-                        textInputType: TextInputType.text,
+                      child: CustomDropdownButton(
+                        value: _selectedStateAbbreviations,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _selectedStateAbbreviations = newValue;
+                          });
+                        },
                       ),
                     ),
                     Expanded(
@@ -165,12 +169,11 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Cadastro realizado com sucesso!'),
-                            duration: Duration(seconds: 2),
                           ),
                         );
 
                         _clearControllers();
-
+                        return;
                       case BlocStatus.error:
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -178,6 +181,7 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
                                 'Erro ao realizar cadastro! ${state.errorMessage}'),
                           ),
                         );
+                        break;
                     }
                   },
                   child: Container(
@@ -187,8 +191,8 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
                     child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            _addAdress();
                             FocusScope.of(context).unfocus();
+                            _addAdress();
                           }
                         },
                         child: const Text('Cadastrar Endereço')),
@@ -208,7 +212,6 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
     _complementoController.clear();
     _bairroController.clear();
     _localidadeController.clear();
-    _ufController.clear();
     _ibgeController.clear();
     _giaController.clear();
     _dddController.clear();
@@ -222,7 +225,6 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
     _complementoController.dispose();
     _bairroController.dispose();
     _localidadeController.dispose();
-    _ufController.dispose();
     _ibgeController.dispose();
     _giaController.dispose();
     _dddController.dispose();
