@@ -42,6 +42,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 case BlocStatus.initial:
                 case BlocStatus.loading:
                 case BlocStatus.success:
+                  if (state.data == null || state.data.isEmpty) {
+                    return Text(
+                      'Nenhum endereço cadastrado.',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    );
+                  }
                   return ListView.builder(
                     itemCount: state.data.length,
                     itemBuilder: (context, index) {
