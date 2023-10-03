@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_back4app/blocs/enum/bloc_status.dart';
 import 'package:flutter_crud_back4app/blocs/register/register_blocs_exports.dart';
 import 'package:flutter_crud_back4app/components/cep_form_field_register.dart';
 import 'package:flutter_crud_back4app/components/custom_dropdown_button.dart';
@@ -162,42 +161,25 @@ class _UpdateCepScreenState extends State<UpdateCepScreen> {
                     ),
                   ],
                 ),
-                BlocListener<RegisterCepBloc, RegisterCepState>(
-                  listener: (context, state) {
-                    switch (state.status) {
-                      case BlocStatus.initial:
-                      case BlocStatus.loading:
-                      case BlocStatus.success:
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Atualização realizada com sucesso!'),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                        return;
-                      case BlocStatus.error:
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                'Erro ao realizar atualização! ${state.errorMessage}'),
-                          ),
-                        );
-                        break;
-                    }
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: 50,
-                    margin: const EdgeInsets.all(15),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _updateAdress();
-                            FocusScope.of(context).unfocus();
-                          }
-                        },
-                        child: const Text('Atualizar endereço')),
-                  ),
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  margin: const EdgeInsets.all(15),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _updateAdress();
+                          FocusScope.of(context).unfocus();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('Atualização realizada com sucesso!'),
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                        }
+                      },
+                      child: const Text('Atualizar endereço')),
                 ),
               ],
             ),
