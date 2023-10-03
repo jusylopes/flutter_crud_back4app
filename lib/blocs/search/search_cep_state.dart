@@ -5,28 +5,28 @@ class SearchCepState extends Equatable {
     required this.status,
     this.address,
     this.errorMessage,
-    this.isEmpty = false,
+    this.isRegisteredCep = false,
   });
 
   final BlocStatus status;
   final CepModel? address;
   final String? errorMessage;
-  final bool isEmpty;
+  final bool isRegisteredCep;
 
   SearchCepState copyWith({
     BlocStatus? status,
     CepModel? address,
     String? errorMessage,
-    bool? isEmpty,
+    bool? isRegistered,
   }) {
     return SearchCepState(
       status: status ?? this.status,
       address: address ?? this.address,
       errorMessage: errorMessage ?? this.errorMessage,
-      isEmpty: isEmpty ?? this.isEmpty,
+      isRegisteredCep: isRegistered ?? isRegisteredCep,
     );
   }
 
   @override
-  List<Object?> get props => [status, address, errorMessage, isEmpty];
+  List<Object?> get props => [status, address, errorMessage, isRegisteredCep];
 }

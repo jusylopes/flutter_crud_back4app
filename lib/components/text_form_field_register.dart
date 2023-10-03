@@ -27,12 +27,6 @@ class TextFormFieldRegister extends StatelessWidget {
           labelText: label,
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Informe $label';
-          }
-          return null;
-        },
       ),
     );
   }

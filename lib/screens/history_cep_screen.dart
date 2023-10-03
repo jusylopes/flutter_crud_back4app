@@ -41,6 +41,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               switch (state.status) {
                 case BlocStatus.initial:
                 case BlocStatus.loading:
+                  return const CircularProgressIndicator();
                 case BlocStatus.success:
                   if (state.data == null || state.data.isEmpty) {
                     return Text(
@@ -48,6 +49,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       style: Theme.of(context).textTheme.titleMedium,
                     );
                   }
+
                   return ListView.builder(
                     itemCount: state.data.length,
                     itemBuilder: (context, index) {
