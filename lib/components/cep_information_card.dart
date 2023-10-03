@@ -12,35 +12,32 @@ class CepInformationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AnimatedIconSearch(
-            sizeIcon: MediaQuery.of(context).size.height / 8,
-          ),
-          Text(
-            address.cep,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          Text(
-            address.bairro,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          Text(
-            address.logradouro,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          Text(
-            '${address.localidade} - ${address.uf}',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          Text(
-            'DDD ${address.ddd}',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        AnimatedIconSearch(
+          sizeIcon: MediaQuery.of(context).size.height / 8,
+        ),
+        Text(
+          address.cep,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        Text(
+          address.bairro,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Text(
+          address.logradouro,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Text(
+          '${address.localidade} - ${address.uf}',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Text(
+          'DDD ${address.ddd}',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ],
     );
   }
 }

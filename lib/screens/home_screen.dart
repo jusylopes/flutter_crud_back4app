@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_crud_back4app/screens/history_cep_screen.dart';
 import 'package:flutter_crud_back4app/screens/search_cep_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int initialIndex;
+  const HomeScreen({Key? key, this.initialIndex = 0}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late int _currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+  }
+
   final List<BottomNavigationBarItem> _bottomNavigationBarItems = [
     const BottomNavigationBarItem(
       icon: Icon(Icons.home),
@@ -26,11 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
     const HistoryScreen(),
   ];
 
-  int _selectedIndex = 0;
-
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _currentIndex = index;
     });
   }
 
@@ -38,11 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _screens.elementAt(_selectedIndex),
+        child: _screens.elementAt(_currentIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavigationBarItems,
-        currentIndex: _selectedIndex,
+        currentIndex: _currentIndex,
         onTap: _onItemTapped,
         iconSize: 30,
         selectedLabelStyle: const TextStyle(
