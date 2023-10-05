@@ -180,8 +180,9 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
                                     await Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomeScreen(initialIndex: 1,)),
+                                        builder: (context) =>
+                                            const HomeScreen(initialIndex: 1),
+                                      ),
                                     );
                                   } else if (state.status == BlocStatus.error) {
                                     ScaffoldMessenger.of(context).showSnackBar(
