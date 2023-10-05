@@ -7,9 +7,7 @@ Isso permite aos usuários criar novos registros de endereços, atualizar inform
 ## Screenshots
 <p>
 <img src="screenshots/Screenshot_1.png" width="19%">
-<img src="screenshots/Screenshot_2.png" width="19%">
-<img src="screenshots/Screenshot_4.png" width="19%">
-  <img src="screenshots/back4app.gif" width="19.4%">
+  <img src="screenshots/back4app.gif" width="19%">
 </p>
 
 ### Tecnologias utilizadas
