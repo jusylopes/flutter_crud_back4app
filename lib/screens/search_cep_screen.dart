@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_back4app/blocs/enum/bloc_status.dart';
 import 'package:flutter_crud_back4app/blocs/search/search_cep_blocs_exports.dart';
+import 'package:flutter_crud_back4app/components/address_empty.dart';
 import 'package:flutter_crud_back4app/components/cep_information_card.dart';
 import 'package:flutter_crud_back4app/components/error_message_app.dart';
+import 'package:flutter_crud_back4app/models/cep_model.dart';
 import 'package:flutter_crud_back4app/screens/register_cep_screen.dart';
 import 'package:flutter_crud_back4app/utils/assets_manager.dart';
 import 'package:flutter_crud_back4app/utils/colors.dart';
@@ -107,6 +109,7 @@ class _SearchCepScreenState extends State<SearchCepScreen> {
                 ),
               ],
             ),
+            automaticallyImplyLeading: false,
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(2),
               child: Container(
@@ -125,11 +128,21 @@ class _SearchCepScreenState extends State<SearchCepScreen> {
                   case BlocStatus.loading:
                     return const CircularProgressIndicator();
                   case BlocStatus.success:
-                    if (state.isEmpty) {
-                      return AddressEmpty(cepController: _cepController);
+                    final CepModel address = state.address!;
+
+                    if (address.bairro.isEmpty) {
+                      return const AddressEmpty();
                     } else {
-                      return CepInformationCard(address: state.address!);
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CepInformationCard(address: address),
+                          if (state.isRegisteredCep == false)
+                            UnregisteredAddress(address: address),
+                        ],
+                      );
                     }
+
                   case BlocStatus.error:
                     return ErrorMessageViaCep(
                       errorMessage: state.errorMessage!,
@@ -148,23 +161,19 @@ class _SearchCepScreenState extends State<SearchCepScreen> {
   }
 }
 
-class AddressEmpty extends StatelessWidget {
-  const AddressEmpty({
+class UnregisteredAddress extends StatelessWidget {
+  const UnregisteredAddress({
     super.key,
-    required TextEditingController cepController,
-  }) : _cepController = cepController;
+    required CepModel address,
+  }) : _address = address;
 
-  final TextEditingController _cepController;
+  final CepModel _address;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'CEP não encontrado',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
         Container(
           width: 200,
           height: 50,
@@ -178,7 +187,7 @@ class AddressEmpty extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => RegisterCepScreen(
-                          inicialCep: _cepController.text,
+                          address: _address,
                         )),
               );
             },
