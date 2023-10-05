@@ -34,16 +34,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
           ),
           toolbarHeight: 80,
+          automaticallyImplyLeading: false,
         ),
         body: Center(
           child: BlocBuilder<RegisterCepBloc, RegisterCepState>(
             builder: (context, state) {
               switch (state.status) {
                 case BlocStatus.initial:
+                  return const Center();
                 case BlocStatus.loading:
                   return const CircularProgressIndicator();
                 case BlocStatus.success:
-                  if (state.data == null || state.data.isEmpty) {
+                  if (state.data.isEmpty) {
                     return Text(
                       'Nenhum endereço cadastrado.',
                       style: Theme.of(context).textTheme.titleMedium,
