@@ -75,9 +75,14 @@ class _UpdateCepScreenState extends State<UpdateCepScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Atualização de CEP'),
-          leading: BackButton(
-            onPressed: () => Navigator.of(context).pop(),
-            color: AppColors.primaryColor,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black38,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(2),
