@@ -83,9 +83,11 @@ class _RegisterCepScreenState extends State<RegisterCepScreen> {
                 child: Scaffold(
                   appBar: AppBar(
                     title: const Text('Cadastro de Endereço'),
-                    leading: BackButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      color: AppColors.primaryColor,
+                    leading: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
                     ),
                     bottom: PreferredSize(
                       preferredSize: const Size.fromHeight(2),
