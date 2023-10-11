@@ -94,7 +94,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     },
                   );
                 case BlocStatus.error:
-                  return ErrorMessageViaCep(
+                  return ErrorMessageApp(
                     errorMessage: state.errorMessage!,
                   );
               }

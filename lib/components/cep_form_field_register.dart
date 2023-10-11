@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:flutter_crud_back4app/utils/cep_input_formatter.dart';
 
 class CepFormFieldRegister extends StatelessWidget {
   const CepFormFieldRegister({
@@ -24,12 +24,7 @@ class CepFormFieldRegister extends StatelessWidget {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: 'CEP',
         ),
-        inputFormatters: [
-          MaskTextInputFormatter(
-            mask: '#####-###',
-            filter: {"#": RegExp(r'[0-9]')},
-          ),
-        ],
+        inputFormatters: [CepInputFormatter()],
         validator: (value) {
           if (value == null || value.isEmpty || value.length != 9) {
             return 'Formato de CEP inválido';
