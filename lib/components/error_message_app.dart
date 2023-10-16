@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ErrorMessageViaCep extends StatelessWidget {
-  const ErrorMessageViaCep({super.key, required this.errorMessage});
+class ErrorMessageApp extends StatelessWidget {
+  const ErrorMessageApp({super.key, required this.errorMessage});
 
   final String errorMessage;
 
