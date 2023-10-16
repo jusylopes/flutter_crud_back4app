@@ -4,7 +4,11 @@ import 'package:flutter_crud_back4app/models/cep_model.dart';
 class CepRepository {
   final Dio dio;
 
-  CepRepository({required this.dio});
+  CepRepository({required this.dio}) {
+    dio.options.headers['X-Parse-Application-Id'] = '';
+    dio.options.headers['X-Parse-REST-API-Key'] = '';
+    dio.options.headers['Content-Type'] = 'application/json';
+  }
 
   static const String _baseUrlBack4app =
       'https://parseapi.back4app.com/classes/ceps';
