@@ -25,9 +25,7 @@ class RegisterCepBloc extends Bloc<RegisterCepEvent, RegisterCepState> {
       final List<CepModel> allCeps = await repository.fetchAllCeps();
       emit(state.copyWith(status: BlocStatus.success, data: allCeps));
     } catch (error) {
-      emit(state.copyWith(
-          status: BlocStatus.error,
-          errorMessage: 'Error loading data Back4App...'));
+      emit(state.copyWith(status: BlocStatus.error, errorMessage: '$error'));
     }
   }
 
@@ -36,8 +34,9 @@ class RegisterCepBloc extends Bloc<RegisterCepEvent, RegisterCepState> {
 
     try {
       await repository.addCep(event.newCep);
+      final updatedCeps = await repository.fetchAllCeps();
 
-      emit(state.copyWith(status: BlocStatus.success));
+      emit(state.copyWith(status: BlocStatus.success, data: updatedCeps));
     } catch (error) {
       emit(state.copyWith(
         status: BlocStatus.error,
@@ -50,10 +49,9 @@ class RegisterCepBloc extends Bloc<RegisterCepEvent, RegisterCepState> {
     emit(state.copyWith(status: BlocStatus.loading));
 
     try {
-       await repository.updateCep(event.updatedCep);
-
-       emit(state.copyWith(status: BlocStatus.success));
-
+      await repository.updateCep(event.updatedCep);
+      add(const GetAllCeps());
+      emit(state.copyWith(status: BlocStatus.success));
     } catch (error) {
       emit(state.copyWith(
         status: BlocStatus.error,
@@ -66,9 +64,14 @@ class RegisterCepBloc extends Bloc<RegisterCepEvent, RegisterCepState> {
     emit(state.copyWith(status: BlocStatus.loading));
 
     try {
-      await repository.deleteCep(event.objectId); 
+      await repository.deleteCep(event.objectId);
+      final updatedCeps =
+          state.data.where((cep) => cep.objectId != event.objectId).toList();
 
-      emit(state.copyWith(status: BlocStatus.success));
+      emit(state.copyWith(
+        status: BlocStatus.success,
+        data: updatedCeps,
+      ));
     } catch (error) {
       emit(state.copyWith(
         status: BlocStatus.error,
